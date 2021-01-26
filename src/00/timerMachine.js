@@ -1,13 +1,28 @@
 export const timerMachineConfig = {
   // ...
-};
+}
 
 export const timerMachine = (state, event) => {
-  // Add the logic that will read the timerMachineConfig
-  // and return the next state, given the current state
-  // and event received
-
-  // ...
-
-  return state;
-};
+  switch (state) {
+    case "idle":
+      if (event.type === "TOGGLE") {
+        return "running"
+      }
+      return state
+    case "running":
+      if (event.type === "TOGGLE") {
+        return "paused"
+      }
+      return state
+    case "paused":
+      if (event.type === "TOGGLE") {
+        return "running"
+      }
+      if (event.type === "RESET") {
+        return "idle"
+      }
+      return state
+    default:
+      return state
+  }
+}
